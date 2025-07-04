@@ -5,6 +5,7 @@ import Homepage from './Pages/Homepage';
 import About from './Pages/About';
 import Blog from './Pages/Blog';
 import OurServices from './Pages/OurServices';
+import Influencers from './Pages/Influencers';
 // Import other components/pages as needed
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/services" element={<OurServices />} />
+        <Route path="/influencer" element={<Influencers />} />
         {/* Add other routes here */}
       </Routes>
     </div>
