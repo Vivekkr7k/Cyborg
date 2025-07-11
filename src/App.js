@@ -6,6 +6,8 @@ import About from './Pages/About';
 import Blog from './Pages/Blog';
 import OurServices from './Pages/OurServices';
 import Influencers from './Pages/Influencers';
+import Contactus from './Pages/Contactus';
+import UpSkill from './Pages/UpSkill';
 // Import other components/pages as needed
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/services" element={<OurServices />} />
         <Route path="/influencer" element={<Influencers />} />
+        <Route path="/contact" element={<Contactus />} />
+        <Route path="/upskill" element={<UpSkill />} />
         {/* Add other routes here */}
       </Routes>
     </div>

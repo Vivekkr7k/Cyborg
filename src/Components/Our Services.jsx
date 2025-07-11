@@ -13,6 +13,7 @@ import {
   FaHashtag,
   FaCode,
 } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const services = [
   {
@@ -77,28 +78,39 @@ const services = [
   },
 ];
 
+const cardVariants = {
+  offscreen: { opacity: 0, y: 60 },
+  onscreen: (i) => ({ opacity: 1, y: 0, transition: { delay: 0.1 * i, duration: 0.7, type: "spring" } }),
+};
+
 const OurServices = () => {
   return (
-    <section className="w-full bg-white text-[#0f172a] py-20 px-6 font-sans">
+    <section className="w-full bg-gradient-to-br from-white via-blue-50 to-cyan-50 py-20 px-4 font-sans overflow-x-hidden">
       <div className="max-w-7xl mx-auto text-center mb-16">
-        <h2 className="text-5xl font-bold mb-4">Our Services</h2>
-        <p className="text-xl text-gray-300">How we can help you?</p>
+        <h2 className="text-5xl font-extrabold mb-4 text-gray-900 tracking-tight">Our Services</h2>
+        <p className="text-xl text-blue-700 font-medium">How we can help you?</p>
       </div>
-
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {services.map((service, i) => (
-          <div
+          <motion.div
             key={i}
-            className="bg-[#1e293b] rounded-2xl p-6 shadow-lg shadow-blue-900/20 hover:shadow-blue-700/30 transition-all duration-300 border border-blue-800 hover:scale-[1.015]"
+            className="group bg-white/80 rounded-3xl p-7 flex flex-col items-start shadow-none border border-blue-100 hover:border-cyan-400 transition-all duration-300 hover:scale-[1.03] hover:bg-white/100 relative overflow-hidden"
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: true, amount: 0.2 }}
+            custom={i}
+            variants={cardVariants}
+            whileHover={{ y: -8, boxShadow: "0 8px 32px 0 rgba(34,197,243,0.10)" }}
           >
             <div className="flex items-center gap-4 mb-4">
-              <div className="bg-blue-600 p-3 rounded-full text-white">
+              <div className="bg-gradient-to-br from-cyan-500 to-blue-600 p-3 rounded-full text-white shadow-lg group-hover:scale-110 transition-transform">
                 {service.icon}
               </div>
-              <h3 className="text-xl text-white font-semibold">{service.title}</h3>
+              <h3 className="text-lg md:text-xl text-gray-900 font-semibold group-hover:text-cyan-700 transition-colors">{service.title}</h3>
             </div>
-            <p className="text-sm text-gray-300">{service.desc}</p>
-          </div>
+            <p className="text-base text-gray-600 group-hover:text-gray-900 transition-colors">{service.desc}</p>
+            <div className="absolute -right-10 -bottom-10 w-32 h-32 bg-cyan-100 rounded-full opacity-30 group-hover:opacity-50 blur-2xl z-0 transition" />
+          </motion.div>
         ))}
       </div>
     </section>
