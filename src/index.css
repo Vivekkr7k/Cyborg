@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes neon {
+  0% { color: #FF4757; }   /* Bright Red */
+  20% { color: #FFA502; }  /* Bright Orange */
+  40% { color: #1DD1A1; }  /* Bright Teal */
+  60% { color: #1E90FF; }  /* Vivid Blue */
+  80% { color: #5F27CD; }  /* Bright Purple */
+  100% { color: #FF6B81; } /* Light Pink */
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); } /* Scale up slightly */
+}
+
+.glow {
+  animation: neon 1.5s infinite alternate, heartbeat 1s infinite; /* Combined animations */
+
+}
