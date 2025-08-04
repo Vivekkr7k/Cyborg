@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_ENDPOINTS } from "../utils/GlobalAPI";
 
 const Banner = () => {
   const [index, setIndex] = useState(0);
@@ -11,7 +12,7 @@ const Banner = () => {
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/banners");
+        const response = await axios.get(API_ENDPOINTS.BANNERS);
         setBanners(response.data);
         setLoading(false);
       } catch (err) {

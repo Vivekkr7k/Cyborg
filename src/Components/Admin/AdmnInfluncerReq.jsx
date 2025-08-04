@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_ENDPOINTS, getImageUrl } from '../../utils/GlobalAPI';
 
 const statusColors = {
   approved: 'bg-green-100 text-green-700',
@@ -24,7 +25,7 @@ const AdmnInfluncerReq = () => {
     if (!window.confirm('Are you sure you want to delete (deactivate) this influencer request?')) return;
     setDeleting((d) => ({ ...d, [id]: true }));
     try {
-      const res = await fetch(`http://localhost:5000/api/influencer/${id}`, {
+      const res = await fetch(`${API_ENDPOINTS.INFLUENCER}/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'deleted' }),
@@ -42,7 +43,7 @@ const AdmnInfluncerReq = () => {
   const handleReactivate = async (id) => {
     setUpdating((u) => ({ ...u, [id]: true }));
     try {
-      const res = await fetch(`http://localhost:5000/api/influencer/${id}`, {
+      const res = await fetch(`${API_ENDPOINTS.INFLUENCER}/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'pending' }),
@@ -59,7 +60,7 @@ const AdmnInfluncerReq = () => {
   const handleStatusChange = async (id, status) => {
     setUpdating((u) => ({ ...u, [id]: true }));
     try {
-      const res = await fetch(`http://localhost:5000/api/influencer/${id}`, {
+      const res = await fetch(`${API_ENDPOINTS.INFLUENCER}/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
@@ -77,7 +78,7 @@ const AdmnInfluncerReq = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('http://localhost:5000/api/influencer');
+      const res = await fetch(API_ENDPOINTS.INFLUENCER);
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
       setRequests(data.reverse());
@@ -123,7 +124,7 @@ const AdmnInfluncerReq = () => {
               &times;
             </button>
             <img
-              src={`http://localhost:5000${modalImg}`}
+              src={getImageUrl(modalImg)}
               alt="Screenshot Full"
               className="max-h-[80vh] max-w-[90vw] rounded"
               style={{ objectFit: 'contain' }}
@@ -242,7 +243,7 @@ const AdmnInfluncerReq = () => {
                             className="mb-1"
                           >
                             <img 
-                              src={`http://localhost:5000${r.screenshot}`}
+                              src={getImageUrl(r.screenshot)}
                               alt="Screenshot" 
                               className="w-12 h-12 object-cover rounded border cursor-pointer"
                               onError={(e) => {

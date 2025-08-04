@@ -2,6 +2,7 @@
 
 
 import React, { useEffect, useState } from 'react';
+import { API_ENDPOINTS } from '../../../utils/GlobalAPI';
 
 const statusOptions = ['pending', 'converted', 'not converted', 'contact again'];
 
@@ -19,7 +20,7 @@ const AdminInquiry = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`http://localhost:5000/api/contact/${id}`, {
+      const res = await fetch(`${API_ENDPOINTS.CONTACT}/${id}`, {
         method: 'DELETE',
       });
       if (!res.ok) {
@@ -40,7 +41,7 @@ const AdminInquiry = () => {
       setLoading(true);
       setError('');
       try {
-        const res = await fetch('http://localhost:5000/api/contact');
+        const res = await fetch(API_ENDPOINTS.CONTACT);
         if (!res.ok) throw new Error('Failed to fetch inquiries');
         const data = await res.json();
         setInquiries(data);
@@ -67,7 +68,7 @@ const AdminInquiry = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`http://localhost:5000/api/contact/${id}`, {
+      const res = await fetch(`${API_ENDPOINTS.CONTACT}/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),

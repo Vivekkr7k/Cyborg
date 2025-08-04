@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from '../../../utils/GlobalAPI';
 
 const emptyCourse = {
   title: '',
@@ -22,7 +23,7 @@ const AdminUpskill = () => {
       setLoading(true);
       setError('');
       try {
-        const res = await fetch('http://localhost:5000/api/courses');
+        const res = await fetch(API_ENDPOINTS.COURSES);
         if (!res.ok) throw new Error('Failed to fetch courses');
         const data = await res.json();
         setCourses(data);
@@ -45,7 +46,7 @@ const AdminUpskill = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/courses', {
+      const res = await fetch(API_ENDPOINTS.COURSES, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -86,7 +87,7 @@ const AdminUpskill = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`http://localhost:5000/api/courses/${id}`, {
+      const res = await fetch(`${API_ENDPOINTS.COURSES}/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editForm),
@@ -117,7 +118,7 @@ const AdminUpskill = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`http://localhost:5000/api/courses/${id}`, {
+      const res = await fetch(`${API_ENDPOINTS.COURSES}/${id}`, {
         method: 'DELETE',
       });
       if (!res.ok) {

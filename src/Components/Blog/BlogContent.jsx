@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../../utils/GlobalAPI';
 
 const BlogContent = () => {
   const [featured, setFeatured] = useState(null);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/blogs')
+    axios.get(API_ENDPOINTS.BLOGS)
       .then(res => {
         const data = res.data || [];
         const feat = data.find(d => d.type === 'Featured') || data[0];

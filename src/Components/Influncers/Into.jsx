@@ -8,10 +8,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import RegisterInfluencer from '../Influencer/RegisterInfluencer';
 import InfluencerProfile from '../Influencer/InfluencerProfile';
 import HireMeForm from '../Influencer/HireMeForm';
+import { API_ENDPOINTS, getImageUrl } from '../../utils/GlobalAPI';
 
-const API_URL = 'http://localhost:5000/api/influencer';
-
-const Intro = () => {
+const Into = () => {
   const [index, setIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -60,14 +59,14 @@ const Intro = () => {
       if (influencer.influencerImage.startsWith('http')) {
         return influencer.influencerImage;
       }
-      return `http://localhost:5000${influencer.influencerImage}`;
+      return getImageUrl(influencer.influencerImage);
     }
     
     if (influencer.screenshot) {
       if (influencer.screenshot.startsWith('http')) {
         return influencer.screenshot;
       }
-      return `http://localhost:5000${influencer.screenshot}`;
+      return getImageUrl(influencer.screenshot);
     }
     
     return `https://i.pravatar.cc/600?u=${influencer._id || Math.random()}`;
@@ -156,7 +155,7 @@ const Intro = () => {
   useEffect(() => {
     const fetchInfluencers = async () => {
       try {
-        const response = await fetch(API_URL);
+        const response = await fetch(API_ENDPOINTS.INFLUENCER);
         const data = await response.json();
         setBackendInfluencers(Array.isArray(data) ? data : []);
       } catch (error) {
@@ -681,4 +680,4 @@ const Intro = () => {
   );
 };
 
-export default Intro;
+export default Into;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { API_ENDPOINTS } from '../../utils/GlobalAPI';
 
 const HireMeForm = ({ onClose, influencerId }) => {
   const handleSubmit = async (e) => {
@@ -12,7 +13,7 @@ const HireMeForm = ({ onClose, influencerId }) => {
     };
 
     try {
-      const res = await fetch('http://localhost:5000/api/hire-requests', {
+      const res = await fetch(API_ENDPOINTS.HIRE_REQUESTS, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

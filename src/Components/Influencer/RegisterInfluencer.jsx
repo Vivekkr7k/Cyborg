@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../../utils/GlobalAPI';
 
 const RegisterInfluencer = ({ onClose }) => {
   const [form, setForm] = useState({
@@ -72,7 +73,7 @@ const RegisterInfluencer = ({ onClose }) => {
         formData.append('screenshot', screenshot);
       }
 
-      const response = await axios.post('http://localhost:5000/api/influencer', formData, {
+      const response = await axios.post(API_ENDPOINTS.INFLUENCER, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from '../utils/GlobalAPI';
 import Navbar from '../Components/Navbar';
 
 const UpSkill = () => {
@@ -12,7 +13,7 @@ const UpSkill = () => {
 	  setLoading(true);
 	  setError('');
 	  try {
-		const res = await fetch('http://localhost:5000/api/courses');
+		const res = await fetch(API_ENDPOINTS.COURSES);
 		if (!res.ok) throw new Error('Failed to fetch courses');
 		const data = await res.json();
 		setCourses(data);

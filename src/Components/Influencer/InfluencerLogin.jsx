@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_ENDPOINTS, getImageUrl } from '../../utils/GlobalAPI';
 import { 
   FiEdit, 
   FiLogOut, 
@@ -87,7 +88,7 @@ const InfluencerLogin = () => {
   const fetchProfile = useCallback(async (token) => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/api/influencer/profile', {
+      const response = await axios.get(API_ENDPOINTS.INFLUENCER_PROFILE, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -95,7 +96,7 @@ const InfluencerLogin = () => {
       setIsLoggedIn(true);
       setPreviewImage(
         response.data.influencerImage 
-          ? `http://localhost:5000${response.data.influencerImage}`
+          ? getImageUrl(response.data.influencerImage)
           : ''
       );
     } catch (err) {
@@ -142,7 +143,7 @@ const InfluencerLogin = () => {
 
       const token = localStorage.getItem('influencerToken');
       const response = await axios.patch(
-        'http://localhost:5000/api/influencer/profile',
+        API_ENDPOINTS.INFLUENCER_PROFILE,
         formData,
         {
           headers: {
@@ -157,7 +158,7 @@ const InfluencerLogin = () => {
       setProfileImage(null);
       setPreviewImage(
         response.data.influencerImage 
-          ? `http://localhost:5000${response.data.influencerImage}`
+          ? getImageUrl(response.data.influencerImage)
           : ''
       );
     } catch (err) {
@@ -223,7 +224,7 @@ const InfluencerLogin = () => {
                     setProfileImage(null);
                     setPreviewImage(
                       influencerData?.influencerImage 
-                        ? `http://localhost:5000${influencerData.influencerImage}`
+                        ? getImageUrl(influencerData.influencerImage)
                         : ''
                     );
                   }}
@@ -465,7 +466,7 @@ const InfluencerLogin = () => {
                         />
                       ) : influencerData?.influencerImage ? (
                         <img
-                          src={`http://localhost:5000${influencerData.influencerImage}`}
+                          src={getImageUrl(influencerData.influencerImage)}
                           alt="Current"
                           className="w-full h-full object-cover"
                         />
@@ -694,7 +695,7 @@ const InfluencerLogin = () => {
                       setProfileImage(null);
                       setPreviewImage(
                         influencerData?.influencerImage 
-                          ? `http://localhost:5000${influencerData.influencerImage}`
+                          ? getImageUrl(influencerData.influencerImage)
                           : ''
                       );
                     }}

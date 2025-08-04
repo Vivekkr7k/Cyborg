@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from '../../utils/GlobalAPI';
 
 const AdminHireMe = () => {
   const [hireRequests, setHireRequests] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [filter, setFilter] = useState('');
   const [influencers, setInfluencers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch hire requests
-        const hireRes = await fetch('http://localhost:5000/api/hire-requests');
-        const hireData = await hireRes.json();
-        if (Array.isArray(hireData)) {
-          setHireRequests(hireData);
-          setFiltered(hireData);
-        }
+        const [hireRes, infRes] = await Promise.all([
+          fetch(API_ENDPOINTS.HIRE_REQUESTS),
+          fetch(API_ENDPOINTS.INFLUENCER)
+        ]);
 
-        // Fetch influencers
-        const infRes = await fetch('http://localhost:5000/api/influencer');
+        const hireData = await hireRes.json();
         const infData = await infRes.json();
-        if (Array.isArray(infData)) {
-          setInfluencers(infData);
-        }
-      } catch (err) {
-        console.error('Error fetching data:', err);
+
+        setHireRequests(hireData);
+        setInfluencers(infData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -44,6 +44,8 @@ const AdminHireMe = () => {
   const getInfluencerDetails = (mongoId) => {
     return influencers.find((inf) => inf._id === mongoId);
   };
+
+  const dataToShow = filter ? filtered : hireRequests;
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
@@ -75,7 +77,7 @@ const AdminHireMe = () => {
             </tr>
           </thead>
           <tbody>
-            {filtered.map((req, index) => {
+            {dataToShow.map((req, index) => {
               const inf = getInfluencerDetails(req.influencerId);
               return (
                 <tr key={index} className="border-t hover:bg-gray-50">
@@ -94,14 +96,16 @@ const AdminHireMe = () => {
                       'N/A'
                     )}
                   </td>
-                  <td className="px-4 py-3 font-mono text-green-700">{inf?.influencerId || 'N/A'}</td>
+                  <td className="px-4 py-3 font-mono text-green-700">
+                    {inf?.influencerId || 'N/A'}
+                  </td>
                   <td className="px-4 py-3 text-slate-500">
                     {new Date(req.createdAt || req.date || Date.now()).toLocaleString()}
                   </td>
                 </tr>
               );
             })}
-            {filtered.length === 0 && (
+            {dataToShow.length === 0 && (
               <tr>
                 <td colSpan="9" className="text-center py-6 text-gray-400">
                   No hire requests found.

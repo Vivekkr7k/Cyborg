@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../../utils/GlobalAPI';
 
 const emptyBlog = {
   heading: '',
@@ -27,7 +28,7 @@ const AdminBlog = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/blogs')
+      .get(API_ENDPOINTS.BLOGS)
       .then((res) => setBlogs(res.data))
       .catch((err) => setError(err.message));
   }, []);
@@ -48,7 +49,7 @@ const AdminBlog = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/blogs', form);
+      const res = await axios.post(API_ENDPOINTS.BLOGS, form);
       setBlogs((prev) => [res.data, ...prev]);
       setForm(emptyBlog);
     } catch (err) {
@@ -79,7 +80,7 @@ const AdminBlog = () => {
     setError('');
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/blogs/${editForm._id}`,
+        `${API_ENDPOINTS.BLOGS}/${editForm._id}`,
         editForm
       );
       setBlogs((prev) =>
@@ -97,7 +98,7 @@ const AdminBlog = () => {
     if (!window.confirm('Delete this blog entry?')) return;
     try {
       await axios.delete(
-        `http://localhost:5000/api/blogs/${blogs[idx]._id}`
+        `${API_ENDPOINTS.BLOGS}/${blogs[idx]._id}`
       );
       setBlogs((prev) => prev.filter((_, i) => i !== idx));
     } catch (err) {

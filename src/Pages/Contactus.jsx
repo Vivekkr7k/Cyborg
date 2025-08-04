@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../Components/Navbar'
 import { motion } from 'framer-motion'
 import Footer from '../Components/Foooter';
+import { API_ENDPOINTS } from '../utils/GlobalAPI';
 
 const Contactus = () => {
   const [form, setForm] = useState({
@@ -29,7 +30,7 @@ const Contactus = () => {
     setSuccess('');
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/contact', {
+      const res = await fetch(API_ENDPOINTS.CONTACT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

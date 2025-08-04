@@ -9,7 +9,7 @@ const BannerEdit = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/banners')
+    axios.get('https://cyborgweb-backend-1.onrender.com/api/banners')
       .then(res => setBanners(res.data))
       .catch(console.error);
   }, []);
@@ -36,7 +36,7 @@ const BannerEdit = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data } = await axios.post('http://localhost:5000/api/banners', banner);
+      const { data } = await axios.post('https://cyborgweb-backend-1.onrender.com/api/banners', banner);
       setBanners(prev => [...prev, data]);
       setBanner({ image: '', title: '', subtext: '' });
     } catch (e) {
@@ -65,7 +65,7 @@ const BannerEdit = () => {
     setLoading(true);
     try {
       const id = editBanner._id;
-      const { data } = await axios.put(`http://localhost:5000/api/banners/${id}`, editBanner);
+      const { data } = await axios.put(`https://cyborgweb-backend-1.onrender.com/api/banners/${id}`, editBanner);
       setBanners(prev => prev.map((b, i) => i === editIdx ? data : b));
       setEditIdx(null);
     } catch (e) {
@@ -78,7 +78,7 @@ const BannerEdit = () => {
   const handleDelete = async idx => {
     if (!window.confirm('Delete this banner?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/banners/${banners[idx]._id}`);
+      await axios.delete(`https://cyborgweb-backend-1.onrender.com/api/banners/${banners[idx]._id}`);
       setBanners(prev => prev.filter((_, i) => i !== idx));
     } catch (e) {
       console.error(e);
